@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This script parses the freeesurfer annotation file for reading into Python.
+This script parses the freesurfer annotation file for reading into Python.
 
 This really helped when writing this script: https://surfer.nmr.mgh.harvard.edu/fswiki/LabelsClutsAnnotationFiles#Annotationfiledesignsurprise
 
