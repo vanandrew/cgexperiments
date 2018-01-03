@@ -10,9 +10,9 @@ Created by Andrew Van (2017), vanandrew77@gmail.com
 """
 import argparse
 
-def read_annotation(parsed):
+def read_annotation(filename):
     # open the annotation file
-    with open(parsed.filename,mode='rb') as annotationfile:
+    with open(filename,mode='rb') as annotationfile:
         # get the total vertex count
         vtxct = int.from_bytes(annotationfile.read(4),byteorder='big')
         # get the rgba value for each vertex
@@ -58,4 +58,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="I read in freesurfer annotation files.")
     parser.add_argument('filename', metavar='annotation_file', help="path to annotation file")
     parsed = parser.parse_args()
-    read_annotation(parsed)
+    read_annotation(parsed.filename)
