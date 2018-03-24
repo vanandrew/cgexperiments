@@ -61,8 +61,8 @@
         // Make pial geometry for each hemisphere
         var left_pial = make_pial_geometry(data,lhcolor);
         var right_pial = make_pial_geometry(data2,rhcolor);
-        scene.add(new THREE.Mesh(left_pial,new THREE.MeshStandardMaterial({vertexColors: THREE.VertexColors})));
-        scene.add(new THREE.Mesh(right_pial,new THREE.MeshStandardMaterial({vertexColors: THREE.VertexColors})));
+        scene.add(new THREE.Mesh(left_pial,new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors})));
+        scene.add(new THREE.Mesh(right_pial,new THREE.MeshLambertMaterial({vertexColors: THREE.VertexColors})));
 
         // Render loop
         function animate() {
