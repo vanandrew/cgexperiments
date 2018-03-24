@@ -10,6 +10,7 @@ Created by Andrew Van (2017), vanandrew77@gmail.com
 """
 import argparse
 import struct
+import json
 
 # open the surface file
 def read_surface(filename):
@@ -70,5 +71,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="I read in freesurfer surface files.")
     parser.add_argument('filename', metavar='surface_file', help='path to surface file')
     parsed = parser.parse_args()
-    read_surface(parsed.filename)
-
+    geometry = read_surface(parsed.filename)
+    with open('{}.json'.format(parsed.filename),'w') as datafile:
+        json.dump(geometry,datafile,sort_keys=True,indent=4,separators=(',',':'))
