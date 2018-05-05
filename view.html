@@ -1,0 +1,107 @@
+<div id="test" style="width:800px;height:600px;"></div>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
+<script src="OrbitControls.js"></script>
+<script src="MSC01.L.midthickness.4k.surf.gii.json"></script>
+<script src="MSC01.R.midthickness.4k.surf.gii.json"></script>
+<script>
+// Setup renderer
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize($('#test').width(),$('#test').height());
+$('#test').append(renderer.domElement);
+
+// Setup scene
+var scene = new THREE.Scene();
+//scene.background = new THREE.Color(0x000000);
+
+// Setup lighting
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(0,300,0);
+scene.add(light);
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(300,0,0);
+scene.add(light);
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(0,0,300);
+scene.add(light);
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(0,-300,0);
+scene.add(light);
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(-300,0,0);
+scene.add(light);
+var light = new THREE.PointLight(0xffffff,1,800);
+light.position.set(0,0,-300);
+scene.add(light);
+
+// Setup camera
+var camera = new THREE.PerspectiveCamera(75,$('#test').width()/$('#test').height(),0.1,1000);
+camera.position.z = 130;
+var controls = new THREE.OrbitControls(camera);
+controls.autoRotate = true;
+controls.enablePan = false;
+controls.enableKeys = false;
+
+// Make pial geometry for each hemisphere
+var left_pial = make_pial_geometry(lhdata,'lhcolor');
+var right_pial = make_pial_geometry(rhdata,'rhcolor');
+scene.add(new THREE.Mesh(left_pial,new THREE.MeshNormalMaterial({wireframe:true})));
+scene.add(new THREE.Mesh(right_pial,new THREE.MeshNormalMaterial({wireframe:true})));
+
+// Render loop
+function animate() {
+	requestAnimationFrame(animate);
+    controls.update();
+    render();
+}
+animate();
+
+// Render function
+function render() {
+    renderer.render(scene,camera);
+}
+
+// Draw pial surface geometry
+function make_pial_geometry(pialdata,hemicolor) {
+    // Setup Geometry
+    var geometry = new THREE.Geometry();
+    for (var i = 0; i < pialdata.vertices.length; i++) {
+        // Define vertices
+        geometry.vertices.push(
+            new THREE.Vector3(
+                pialdata.vertices[i][1],
+                pialdata.vertices[i][2],
+                pialdata.vertices[i][0]
+            )
+        );
+    }
+    for (var i = 0; i < pialdata.faces.length; i++) {
+	// get color for each vertex
+	//let color0 = hemicolor['vertexcolor'][pialdata.faces[i][0]].slice(0,3);
+	//let color1 = hemicolor['vertexcolor'][pialdata.faces[i][1]].slice(0,3);
+	//let color2 = hemicolor['vertexcolor'][pialdata.faces[i][2]].slice(0,3);
+        // Define faces
+        geometry.faces.push(
+            new THREE.Face3(
+                pialdata.faces[i][1],
+                pialdata.faces[i][2],
+                pialdata.faces[i][0],
+                /*null,
+                [
+                    new THREE.Color(color1[0]/255,color1[1]/255,color1[2]/255),
+                    new THREE.Color(color2[0]/255,color2[1]/255,color2[2]/255),
+                    new THREE.Color(color0[0]/255,color0[1]/255,color0[2]/255),
+                ]*/
+            )
+        )
+    }
+    // compute vertex and face normals
+    geometry.computeFaceNormals();
+    geometry.computeVertexNormals();
+    // return geometry
+    return geometry;
+}
+</script>
