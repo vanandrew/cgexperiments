@@ -5,8 +5,10 @@
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
 <script src="OrbitControls.js"></script>
-<script src="MSC01.L.midthickness.4k.surf.gii.json"></script>
-<script src="MSC01.R.midthickness.4k.surf.gii.json"></script>
+<!--script src="MSC01.L.midthickness.4k.surf.gii.json"></script>
+<script src="MSC01.R.midthickness.4k.surf.gii.json"></script-->
+<script src="MSC01.L.inflated.4k.surf.gii.json"></script>
+<script src="MSC01.R.inflated.4k.surf.gii.json"></script>
 <script>
 // Setup renderer
 var renderer = new THREE.WebGLRenderer();
@@ -39,7 +41,7 @@ scene.add(light);
 
 // Setup camera
 var camera = new THREE.PerspectiveCamera(75,$('#test').width()/$('#test').height(),0.1,1000);
-camera.position.z = 130;
+camera.position.z = 200;
 var controls = new THREE.OrbitControls(camera);
 controls.autoRotate = true;
 controls.enablePan = false;
@@ -48,8 +50,10 @@ controls.enableKeys = false;
 // Make pial geometry for each hemisphere
 var left_pial = make_pial_geometry(lhdata,'lhcolor');
 var right_pial = make_pial_geometry(rhdata,'rhcolor');
-scene.add(new THREE.Mesh(left_pial,new THREE.MeshNormalMaterial({wireframe:true})));
-scene.add(new THREE.Mesh(right_pial,new THREE.MeshNormalMaterial({wireframe:true})));
+left_pial.translate(0,0,-40);
+right_pial.translate(0,0,40);
+scene.add(new THREE.Mesh(left_pial,new THREE.MeshNormalMaterial({wireframe:false})));
+scene.add(new THREE.Mesh(right_pial,new THREE.MeshNormalMaterial({wireframe:false})));
 
 // Render loop
 function animate() {
