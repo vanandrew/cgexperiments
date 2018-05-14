@@ -28,7 +28,7 @@ def read_annotation(filename):
     # link labels and network data
     linked_table = {'L': {}, 'R': {}}
     for network,label in zip(network_data,vertex_table):
-        linked_table[label['hemi']][str(label['vertex'])] = network+1
+        linked_table[label['hemi']][str(label['vertex'])] = network
 
     # create lookup table
     with open('network.json','r') as colorfile:
@@ -36,7 +36,7 @@ def read_annotation(filename):
     vertexcolor = {}
     for hemi in ['L','R']:
         vertexcolor[hemi] = {}
-        for n in range(4002):
+        for n in range(32492):
             # get the network of the vertex
             network = str(linked_table[hemi].get(str(n)))
             if network == 'None':
