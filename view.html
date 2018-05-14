@@ -5,10 +5,9 @@
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/92/three.min.js"></script>
 <script src="OrbitControls.js"></script>
-<!--script src="MSC01.L.midthickness.4k.surf.gii.json"></script>
-<script src="MSC01.R.midthickness.4k.surf.gii.json"></script-->
-<script src="MSC01.L.inflated.4k.surf.gii.json"></script>
-<script src="MSC01.R.inflated.4k.surf.gii.json"></script>
+<script src="MSC06_networks_32k.dscalar.nii.json"></script>
+<script src="MSC06.L.pial.32k_fs_LR.surf.gii.json"></script>
+<script src="MSC06.R.pial.32k_fs_LR.surf.gii.json"></script>
 <script>
 // Setup renderer
 var renderer = new THREE.WebGLRenderer();
@@ -48,12 +47,12 @@ controls.enablePan = false;
 controls.enableKeys = false;
 
 // Make pial geometry for each hemisphere
-var left_pial = make_pial_geometry(lhdata,'lhcolor');
-var right_pial = make_pial_geometry(rhdata,'rhcolor');
-left_pial.translate(0,0,-40);
-right_pial.translate(0,0,40);
-scene.add(new THREE.Mesh(left_pial,new THREE.MeshNormalMaterial({wireframe:false})));
-scene.add(new THREE.Mesh(right_pial,new THREE.MeshNormalMaterial({wireframe:false})));
+var left_pial = make_pial_geometry(lhdata,'L');
+var right_pial = make_pial_geometry(rhdata,'R');
+left_pial.translate(20,0,0);
+right_pial.translate(20,0,0);
+scene.add(new THREE.Mesh(left_pial,new THREE.MeshLambertMaterial({vertexColors:THREE.VertexColors})));
+scene.add(new THREE.Mesh(right_pial,new THREE.MeshLambertMaterial({vertexColors:THREE.VertexColors})));
 
 // Render loop
 function animate() {
@@ -69,7 +68,7 @@ function render() {
 }
 
 // Draw pial surface geometry
-function make_pial_geometry(pialdata,hemicolor) {
+function make_pial_geometry(pialdata,hemi) {
     // Setup Geometry
     var geometry = new THREE.Geometry();
     for (var i = 0; i < pialdata.vertices.length; i++) {
@@ -83,24 +82,35 @@ function make_pial_geometry(pialdata,hemicolor) {
         );
     }
     for (var i = 0; i < pialdata.faces.length; i++) {
-	// get color for each vertex
-	//let color0 = hemicolor['vertexcolor'][pialdata.faces[i][0]].slice(0,3);
-	//let color1 = hemicolor['vertexcolor'][pialdata.faces[i][1]].slice(0,3);
-	//let color2 = hemicolor['vertexcolor'][pialdata.faces[i][2]].slice(0,3);
+    	// get color for each vertex
+    	var color0 = colortable[hemi][pialdata.faces[i][0]]['Color'];
+    	var color1 = colortable[hemi][pialdata.faces[i][1]]['Color'];
+    	var color2 = colortable[hemi][pialdata.faces[i][2]]['Color'];
+        if (color0 === null) { color0 = [0.25,0.25,0.25]; }
+        if (color1 === null) { color1 = [0.25,0.25,0.25]; };
+        if (color2 === null) { color2 = [0.25,0.25,0.25]; };
         // Define faces
         geometry.faces.push(
             new THREE.Face3(
                 pialdata.faces[i][1],
                 pialdata.faces[i][2],
                 pialdata.faces[i][0],
-                /*null,
+                null,
                 [
-                    new THREE.Color(color1[0]/255,color1[1]/255,color1[2]/255),
-                    new THREE.Color(color2[0]/255,color2[1]/255,color2[2]/255),
-                    new THREE.Color(color0[0]/255,color0[1]/255,color0[2]/255),
-                ]*/
+                    new THREE.Color(color1[0],color1[1],color1[2]),
+                    new THREE.Color(color2[0],color2[1],color2[2]),
+                    new THREE.Color(color0[0],color0[1],color0[2]),
+                ]
             )
         )
+        // assign network name to face
+        if (colortable[hemi][pialdata.faces[i][0]]["Network"] === null){
+            var name = 'N/A';
+        }
+        else {
+            var name = colortable[hemi][pialdata.faces[i][0]]["Network"];
+        }
+        geometry.faces[i].network = name;
     }
     // compute vertex and face normals
     geometry.computeFaceNormals();

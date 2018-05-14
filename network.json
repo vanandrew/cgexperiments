@@ -1,0 +1,78 @@
+{
+    "1": {
+        "Name":"Default",
+        "Color": [1,0,0]
+    },
+    "2": {
+        "Name":"Visual",
+        "Color": [0,0,0.607843137]
+    },
+    "3": {
+        "Name": "Fronto-parietal",
+        "Color": [1,1,0]
+    },
+    "4": {
+        "Name": "Medial Visual",
+        "Color": [1,0.705882353,0.392156863]
+    },
+    "5": {
+        "Name": "Dorsal Attention",
+        "Color": [0,0.784313725,0]
+    },
+    "6": {
+        "Name": "Premotor",
+        "Color": [1,0.607843137,1]
+    },
+    "7": {
+        "Name": "Ventral Attention",
+        "Color": [0,0.607843137,0.607843137]
+    },
+    "8": {
+        "Name": "Salience",
+        "Color": [0,0,0]
+    },
+    "9": {
+        "Name": "Cingulo-opercular",
+        "Color": [0.301960784,0,0.607843137]
+    },
+    "10": {
+        "Name": "Hand Somatomotor",
+        "Color": [0.196078431,1,1]
+    },
+    "11": {
+        "Name": "Mouth Somatomotor",
+        "Color": [1,0.501960784,0]
+    },
+    "12": {
+        "Name": "Auditory",
+        "Color": [0.607843137,0.196078431,1]
+    },
+    "13": {
+        "Name": "Medial Temporal Lobe",
+        "Color": [0,0.196078431,0.392156863]
+    },
+    "14": {
+        "Name": "Posterior Medial Temporal Lobe",
+        "Color": [0.196078431,1,0.196078431]
+    },
+    "15": {
+        "Name": "Parietal Memory",
+        "Color": [0,0,1]
+    },
+    "16": {
+        "Name": "Context",
+        "Color": [1,1,1]
+    },
+    "17": {
+        "Name": "Foot Somatomotor",
+        "Color": [0,0.392156863,0]
+    },
+    "18": {
+        "Name": "Occipital Temporal Parietal",
+        "Color": [0.254901961,0.254901961,0.254901961]
+    },
+    "21": {
+        "Name": "Unknown",
+        "Color": [0.882352941,0.450980392,0.607843137]
+    }
+}

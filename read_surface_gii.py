@@ -36,4 +36,5 @@ if __name__ == '__main__':
     parsed = parser.parse_args()
     geometry = read_surface(parsed.filename)
     with open('{}.json'.format(parsed.filename),'w') as datafile:
-        json.dump(geometry,datafile,sort_keys=True,indent=4,separators=(',',':'))
+        #json.dump(geometry,datafile,sort_keys=True,indent=4,separators=(',',':'))
+        json.dump(geometry,datafile,separators=(',',':'))
